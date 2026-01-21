@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Hotel - Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(218, 165, 32, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        h1 {
+            font-size: 4em;
+            font-weight: 300;
+            letter-spacing: 8px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(45deg, #daa520, #ffd700, #daa520);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #daa520;
+            letter-spacing: 4px;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(218, 165, 32, 0.1);
+            border: 2px solid #daa520;
+            color: #daa520;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 50px;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(218, 165, 32, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .tab-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.4);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #daa520 0%, #ffd700 100%);
+            color: #1a1a2e;
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .tab-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-section {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .menu-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(218, 165, 32, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 0.6s ease-out backwards;
+        }
+
+        .menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item:nth-child(3) { animation-delay: 0.3s; }
+        .menu-item:nth-child(4) { animation-delay: 0.4s; }
+        .menu-item:nth-child(5) { animation-delay: 0.5s; }
+        .menu-item:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(218, 165, 32, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .menu-item:hover::before {
+            opacity: 1;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #daa520;
+            box-shadow: 0 20px 60px rgba(218, 165, 32, 0.3);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .item-name {
+            font-size: 1.5em;
+            color: #daa520;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .item-price {
+            font-size: 1.8em;
+            color: #ffd700;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .item-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+
+        .item-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(218, 165, 32, 0.2);
+            color: #daa520;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background: rgba(218, 165, 32, 0.4);
+            transform: scale(1.05);
+        }
+
+        .special-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.8em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            animation: bounce 2s infinite;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 80px;
+            border-top: 1px solid rgba(218, 165, 32, 0.2);
+        }
+
+        .decorative-line {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #daa520, transparent);
+            margin: 20px auto;
+            animation: expandLine 2s ease-in-out infinite;
+        }
+
+        @keyframes expandLine {
+            0%, 100% { width: 100px; }
+            50% { width: 200px; }
+        }
+
+        .floating-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #daa520 0%, #ffd700 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.5);
+            animation: float 3s ease-in-out infinite;
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        .floating-icon:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+                letter-spacing: 4px;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-btn {
+                padding: 12px 25px;
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-bg"></div>
+            <h1>GRAND HOTEL</h1>
+            <p class="subtitle">CULINARY EXCELLENCE</p>
+            <div class="decorative-line"></div>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="appetizers"><span>APPETIZERS</span></button>
+            <button class="tab-btn" data-tab="mains"><span>MAIN COURSES</span></button>
+            <button class="tab-btn" data-tab="desserts"><span>DESSERTS</span></button>
+            <button class="tab-btn" data-tab="drinks"><span>BEVERAGES</span></button>
+        </div>
+
+        <div id="appetizers" class="menu-section active">
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="special-badge">CHEF'S SPECIAL</div>
+                    <div class="item-header">
+                        <h3 class="item-name">Truffle Bruschetta</h3>
+                        <span class="item-price">$18</span>
+                    </div>
+                    <p class="item-description">Artisan sourdough topped with wild mushrooms, black truffle oil, and aged parmesan, finished with microgreens.</p>
+                    <div class="item-tags">
+                        <span class="tag">Vegetarian</span>
+                        <span class="tag">Signature</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Seared Scallops</h3>
+                        <span class="item-price">$24</span>
+                    </div>
+                    <p class="item-description">Pan-seared scallops with cauliflower purée, crispy pancetta, and citrus beurre blanc.</p>
+                    <div class="item-tags">
+                        <span class="tag">Gluten-Free</span>
+                        <span class="tag">Seafood</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Burrata Caprese</h3>
+                        <span class="item-price">$16</span>
+                    </div>
+                    <p class="item-description">Creamy burrata cheese with heirloom tomatoes, fresh basil, balsamic reduction, and extra virgin olive oil.</p>
+                    <div class="item-tags">
+                        <span class="tag">Vegetarian</span>
+                        <span class="tag">Fresh</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Beef Carpaccio</h3>
+                        <span class="item-price">$22</span>
+                    </div>
+                    <p class="item-description">Paper-thin slices of premium beef tenderloin with arugula, parmesan shavings, and truffle aioli.</p>
+                    <div class="item-tags">
+                        <span class="tag">Premium</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mains" class="menu-section">
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="special-badge">CHEF'S SPECIAL</div>
+                    <div class="item-header">
+                        <h3 class="item-name">Wagyu Ribeye</h3>
+                        <span class="item-price">$65</span>
+                    </div>
+                    <p class="item-description">Premium A5 Wagyu ribeye with roasted garlic mashed potatoes, grilled asparagus, and red wine reduction.</p>
+                    <div class="item-tags">
+                        <span class="tag">Premium</span>
+                        <span class="tag">Signature</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Chilean Sea Bass</h3>
+                        <span class="item-price">$48</span>
+                    </div>
+                    <p class="item-description">Pan-seared sea bass with lemon risotto, sautéed spinach, and champagne butter sauce.</p>
+                    <div class="item-tags">
+                        <span class="tag">Seafood</span>
+                        <span class="tag">Gluten-Free</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Duck Confit</h3>
+                        <span class="item-price">$42</span>
+                    </div>
+                    <p class="item-description">Slow-cooked duck leg with potato gratin, roasted root vegetables, and orange gastrique.</p>
+                    <div class="item-tags">
+                        <span class="tag">Classic</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Mushroom Risotto</h3>
+                        <span class="item-price">$32</span>
+                    </div>
+                    <p class="item-description">Creamy arborio rice with wild mushrooms, white truffle oil, parmesan, and fresh herbs.</p>
+                    <div class="item-tags">
+                        <span class="tag">Vegetarian</span>
+                        <span class="tag">Popular</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Rack of Lamb</h3>
+                        <span class="item-price">$52</span>
+                    </div>
+                    <p class="item-description">Herb-crusted lamb rack with rosemary jus, seasonal vegetables, and pommes Anna.</p>
+                    <div class="item-tags">
+                        <span class="tag">Premium</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Lobster Thermidor</h3>
+                        <span class="item-price">$58</span>
+                    </div>
+                    <p class="item-description">Whole lobster with creamy brandy sauce, gruyère cheese, served with herb-roasted potatoes.</p>
+                    <div class="item-tags">
+                        <span class="tag">Luxury</span>
+                        <span class="tag">Seafood</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="desserts" class="menu-section">
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="special-badge">CHEF'S SPECIAL</div>
+                    <div class="item-header">
+                        <h3 class="item-name">Chocolate Soufflé</h3>
+                        <span class="item-price">$16</span>
+                    </div>
+                    <p class="item-description">Warm Belgian chocolate soufflé with vanilla bean ice cream and raspberry coulis.</p>
+                    <div class="item-tags">
+                        <span class="tag">Signature</span>
+                        <span class="tag">Warm</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Crème Brûlée</h3>
+                        <span class="item-price">$14</span>
+                    </div>
+                    <p class="item-description">Classic French vanilla custard with caramelized sugar crust and fresh berries.</p>
+                    <div class="item-tags">
+                        <span class="tag">Classic</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Tiramisu</h3>
+                        <span class="item-price">$13</span>
+                    </div>
+                    <p class="item-description">Traditional Italian dessert with espresso-soaked ladyfingers, mascarpone, and cocoa powder.</p>
+                    <div class="item-tags">
+                        <span class="tag">Italian</span>
+                        <span class="tag">Popular</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Lemon Tart</h3>
+                        <span class="item-price">$12</span>
+                    </div>
+                    <p class="item-description">Zesty lemon curd in buttery pastry shell with Swiss meringue and candied lemon zest.</p>
+                    <div class="item-tags">
+                        <span class="tag">Citrus</span>
+                        <span class="tag">Fresh</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="drinks" class="menu-section">
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Champagne</h3>
+                        <span class="item-price">$85</span>
+                    </div>
+                    <p class="item-description">Dom Pérignon Vintage - Premium French champagne with notes of almond, brioche, and white fruit.</p>
+                    <div class="item-tags">
+                        <span class="tag">Premium</span>
+                        <span class="tag">Sparkling</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Red Wine</h3>
+                        <span class="item-price">$45</span>
+                    </div>
+                    <p class="item-description">Château Margaux - Bordeaux blend with complex flavors of blackberry, cedar, and spice.</p>
+                    <div class="item-tags">
+                        <span class="tag">French</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Craft Cocktail</h3>
+                        <span class="item-price">$18</span>
+                    </div>
+                    <p class="item-description">The Grand Martini - Premium gin, dry vermouth, with a twist of lemon and olive garnish.</p>
+                    <div class="item-tags">
+                        <span class="tag">Signature</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Espresso</h3>
+                        <span class="item-price">$6</span>
+                    </div>
+                    <p class="item-description">Italian roast espresso - Rich, full-bodied with notes of dark chocolate and caramel.</p>
+                    <div class="item-tags">
+                        <span class="tag">Coffee</span>
+                        <span class="tag">Hot</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-header">
+                        <h3 class="item-name">Fresh Juice</h3>
+                        <span class="item-price">$8</span>
+                    </div>
+                    <p class="item-description">Seasonal fresh-pressed juice blend - Orange, carrot, ginger, and a hint of turmeric.</p>
+                    <div class="item-tags">
+                        <span class="tag">Healthy</span>
+                        <span class="tag">Fresh</span>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="special-badge">CHEF'S SPECIAL</div>
+                    <div class="item-header">
+                        <h3 class="item-name">Signature Mocktail</h3>
+                        <span class="item-price">$12</span>
+                    </div>
+                    <p class="item-description">Garden Fresh - Cucumber, mint, lime, elderflower syrup, topped with sparkling water.</p>
+                    <div class="item-tags">
+                        <span class="tag">Non-Alcoholic</span>
+                        <span class="tag">Refreshing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="decorative-line"></div>
+            <p style="color: rgba(255,255,255,0.6); letter-spacing: 2px; margin-top: 20px;">
+                GRAND HOTEL • EST. 1892 • CULINARY EXCELLENCE
+            </p>
+            <p style="color: rgba(218,165,32,0.8); margin-top: 10px; font-size: 0.9em;">
+                All prices in USD • Menu items subject to availability
+            </p>
+        </footer>
+    </div>
+
+    <div class="floating-icon" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </div>
+
+    <script>
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const menuSections = document.querySelectorAll('.menu-section');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+                
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                menuSections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === targetTab) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('header');
+            header.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
+</body>
+</html>
